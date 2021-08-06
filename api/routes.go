@@ -1,6 +1,8 @@
 package api
 
 import (
+	"fmt"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -10,7 +12,7 @@ func ping(c *gin.Context) {
 	})
 }
 
-func start_api() {
+func StartAPI(Port int) {
 	router := gin.Default()
 	v1 := router.Group("/v1")
 	{
@@ -27,5 +29,5 @@ func start_api() {
 			news.GET("/ping", ping)
 		}
 	}
-	router.Run()
+	router.Run(fmt.Sprintf(":%d", Port))
 }
