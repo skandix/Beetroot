@@ -2,22 +2,24 @@ package config
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/spf13/viper"
 )
 
-func SetDefaults() {
-
-}
-
-func main() {
+func SetupConfig() {
 	viper.SetConfigName("config")          // name of config file (without extension)
 	viper.SetConfigType("yaml")            // REQUIRED if the config file does not have the extension in the name
 	viper.AddConfigPath("$HOME/.beetroot") // call multiple times to add many search pathsw
 	viper.AddConfigPath(".")               // optionally look for config in the working directory
 
-	err := viper.ReadInConfig() // Find and read the config file
-	if err != nil {             // Handle errors reading the config file
-		panic(fmt.Errorf("Fatal error config file: %w \n", err))
+	if err := viper.ReadInConfig(); err != nil { // Handle errors reading the config file
+		if _, ok := err.(viper.ConfigFileNotFoundError); !ok {
+			log.Fatalf("Error cannot find config file %s\n", err.Error())
+		}
 	}
+}
+
+func ReadData() {
+	fmt.Println(viper.Get("Hacker"))
 }

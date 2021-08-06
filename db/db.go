@@ -2,8 +2,11 @@ package db
 
 import (
 	"fmt"
+
+	"github.com/betauia/beetroot/config"
 )
 
-func db_init() {
+func DBConnect() {
 	fmt.Println("hello from db")
+	config.SetupConfig()
 }
