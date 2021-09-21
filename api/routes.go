@@ -57,7 +57,7 @@ func GetJobs(c *gin.Context) {
 	c.JSON(http.StatusOK, jobs)
 }
 
-func ping(c *gin.Context) {
+func root(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"status": "Online",
 	})
@@ -65,6 +65,7 @@ func ping(c *gin.Context) {
 
 func StartAPI(Port int) {
 	router := gin.Default()
+    router.GET("/", root)
 	v1 := router.Group("/v1")
 	{
 		events := v1.Group("/events")
