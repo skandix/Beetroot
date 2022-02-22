@@ -2,6 +2,7 @@ package api
 
 import (
 	"fmt"
+	"time"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -57,6 +58,12 @@ func GetJobs(c *gin.Context) {
 	c.JSON(http.StatusOK, jobs)
 }
 
+func GetTime(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{
+		"time":time.Now(),
+	})
+}
+
 func root(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"status": "Online",
@@ -79,6 +86,10 @@ func StartAPI(Port int) {
 		news := v1.Group("/news")
 		{
 			news.GET("/", GetNews)
+		}
+		time := v1.Group("/time")
+		{
+			time.GET("/", GetTime)
 		}
 	}
 	router.Run(fmt.Sprintf(":%d", Port))
