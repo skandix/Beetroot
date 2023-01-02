@@ -7,6 +7,6 @@ import (
 )
 
 func DBConnect() {
-	fmt.Println("hello from db")
+	fmt.Println("hello from db pkg")
 	config.SetupConfig()
 }

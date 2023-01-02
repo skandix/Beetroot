@@ -1,6 +1,7 @@
 package api
 
 import (
+	"os"
 	"fmt"
 	"time"
 	"net/http"
@@ -64,16 +65,35 @@ func GetTime(c *gin.Context) {
 	})
 }
 
+func GetEnv(c *gin.Context) {
+	tenv := "HackerLeetC0d3"
+	c.JSON(http.StatusOK, gin.H{
+		tenv: os.Getenv(tenv),
+	})
+}
+
+func GetFile(c *gin.Context) {
+	fn := ".secretFile.txt"
+	cont, err := os.ReadFile("/tmp/"+fn)
+	if err != nil{
+		panic("missing "+fn)
+	}
+	c.JSON(http.StatusOK, gin.H{
+		fn: string(cont),
+	})
+}
+
 func root(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"status": "Online",
 	})
 }
 
+
 func StartAPI(Port int) {
 	router := gin.Default()
     router.GET("/", root)
-	v1 := router.Group("/v1")
+	v1 := router.Group("/api/v1")
 	{
 		events := v1.Group("/events")
 		{
@@ -90,6 +110,14 @@ func StartAPI(Port int) {
 		time := v1.Group("/time")
 		{
 			time.GET("/", GetTime)
+		}
+		env := v1.Group("/env")
+		{
+			env.GET("/", GetEnv)
+		}
+		File := v1.Group("/file")
+		{
+			File.GET("/", GetFile)
 		}
 	}
 	router.Run(fmt.Sprintf(":%d", Port))

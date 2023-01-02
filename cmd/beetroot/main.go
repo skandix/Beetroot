@@ -8,7 +8,6 @@ import (
 
 func main() {
 	config.SetupConfig()
-	config.ReadData()
 	db.DBConnect()
 	api.StartAPI(8080)
 }

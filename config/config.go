@@ -1,11 +1,11 @@
 package config
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/spf13/viper"
 )
+
 
 func SetupConfig() {
 	viper.SetConfigName("config")          // name of config file (without extension)
@@ -18,8 +18,4 @@ func SetupConfig() {
 			log.Fatalf("Error cannot find config file %s\n", err.Error())
 		}
 	}
-}
-
-func ReadData() {
-	fmt.Println(viper.Get("Hacker"))
 }
